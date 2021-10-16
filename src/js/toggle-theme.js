@@ -7,27 +7,27 @@ const Theme = {
     DARK: 'dark-theme',
 };
 
-onDefaultTheme();
+onLoading();
 
 toggleRef.addEventListener('change', onChangeTheme);
 
-function onChangeTheme() {
-    bodyEl.classList.toggle(Theme.DARK);
-    if (bodyEl.classList.contains(Theme.DARK)) {
-            localStorage.setItem('theme', Theme.DARK);
-        } else {
-            localStorage.setItem('theme', Theme.LIGHT);
-        }
-    // bodyEl.classList.toggle(Theme.LIGHT);
-
+function onLoading() {
+    if(!localStorage.length) {
+        localStorage.setItem('theme', Theme.LIGHT); 
+        bodyEl.classList.add(Theme.LIGHT);
+           
+    } else {
+        bodyEl.classList.add(localStorage.getItem('theme'));
+    }
+ 
 };
 
+function onChangeTheme() {
+    bodyEl.classList.toggle(Theme.DARK);
+    bodyEl.classList.toggle(Theme.LIGHT);
+    localStorage.setItem('theme', bodyEl.className);
+};
 
-function onDefaultTheme() {
-    if(!localStorage.length) {
-        localStorage.setItem('theme', Theme.LIGHT);
-        
-    } 
-        bodyEl.classList.toggle(Theme.LIGHT);
-
-}
+if (localStorage.getItem('theme') === Theme.DARK) {
+    toggleRef.setAttribute('checked', true);
+};
